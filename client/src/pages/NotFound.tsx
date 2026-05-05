@@ -1,49 +1,75 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { AlertCircle, Home } from "lucide-react";
-import { useLocation } from "wouter";
+import { Link } from 'wouter';
+import { motion } from 'framer-motion';
+import { Home, Package } from 'lucide-react';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import ParticleBackground from '@/components/ParticleBackground';
 
 export default function NotFound() {
-  const [, setLocation] = useLocation();
-
-  const handleGoHome = () => {
-    setLocation("/");
-  };
-
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
-      <Card className="w-full max-w-lg mx-4 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-        <CardContent className="pt-8 pb-8 text-center">
-          <div className="flex justify-center mb-6">
-            <div className="relative">
-              <div className="absolute inset-0 bg-red-100 rounded-full animate-pulse" />
-              <AlertCircle className="relative h-16 w-16 text-red-500" />
-            </div>
-          </div>
+    <div className="min-h-screen flex flex-col" style={{ background: 'oklch(0.09 0.02 255)' }}>
+      <ParticleBackground />
+      <Navbar />
 
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">404</h1>
-
-          <h2 className="text-xl font-semibold text-slate-700 mb-4">
-            Page Not Found
-          </h2>
-
-          <p className="text-slate-600 mb-8 leading-relaxed">
-            Sorry, the page you are looking for doesn't exist.
-            <br />
-            It may have been moved or deleted.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button
-              onClick={handleGoHome}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
+      <div className="flex-1 flex items-center justify-center relative z-10">
+        <div className="text-center px-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div
+              className="text-8xl sm:text-9xl font-bold mb-4 text-glow"
+              style={{
+                fontFamily: 'Space Grotesk, sans-serif',
+                color: 'oklch(0.55 0.22 255)',
+                letterSpacing: '-0.04em',
+              }}
             >
-              <Home className="w-4 h-4 mr-2" />
-              Go Home
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+              404
+            </div>
+            <div
+              className="w-16 h-0.5 mx-auto mb-6 rounded"
+              style={{ background: 'linear-gradient(90deg, transparent, oklch(0.55 0.22 255), transparent)' }}
+            />
+            <h1
+              className="text-2xl font-bold mb-3"
+              style={{ fontFamily: 'Space Grotesk, sans-serif', color: 'white' }}
+            >
+              Page Not Found
+            </h1>
+            <p className="mb-8 max-w-sm mx-auto" style={{ color: 'oklch(0.55 0.02 255)' }}>
+              The plugin or page you're looking for doesn't exist in the vault.
+            </p>
+            <div className="flex flex-wrap gap-3 justify-center">
+              <Link href="/">
+                <button
+                  className="btn-primary flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm"
+                  style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+                >
+                  <Home size={15} />
+                  Go Home
+                </button>
+              </Link>
+              <Link href="/plugins">
+                <button
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm transition-all hover:bg-white/10"
+                  style={{
+                    color: 'oklch(0.75 0.05 255)',
+                    border: '1px solid rgba(255,255,255,0.12)',
+                    fontFamily: 'Space Grotesk, sans-serif',
+                  }}
+                >
+                  <Package size={15} />
+                  Browse Plugins
+                </button>
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      <Footer />
     </div>
   );
 }
